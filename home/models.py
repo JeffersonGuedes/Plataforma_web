@@ -1,8 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Usuario(models.Model):
-    nome = models.CharField(max_length=150)
-    senha = models.CharField(max_length=20)
 
 class Livro(models.Model):
     titulo = models.CharField(max_length=255)
@@ -17,7 +15,7 @@ class Livro(models.Model):
     formato = models.CharField(max_length=50, blank=True, null=True)
     preco = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     data_adicao = models.DateTimeField(auto_now_add=True)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='livros')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='livros', default=1)
 
     def __str__(self):
-        return self.titulo
+        return f"Form {self.id} for {self.user.username}"

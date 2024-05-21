@@ -48,15 +48,21 @@ def base(request):
     
 @login_required(login_url="/auth/login/")
 def livro_list(request):
-    return render(request, 'livro_list.html')
+    livro = Livro.objects.all()
+    return render(
+        request,
+        "livro_list.html",
+        {"livros": livro},
+    )
 
 @login_required(login_url="/auth/login/")
 def livro_create(request):
     return render(request, 'livro_form.html')
 
 @login_required(login_url="/auth/login/")
-def salvar_livro(request, id):
+def salvar_livro(request):
     if request.method == "POST":
+        user = request.user
         titulo = request.POST.get("nome")
         if titulo == "":
             return render(request, "page_404.html")
@@ -74,6 +80,7 @@ def salvar_livro(request, id):
         descricao = request.POST.get("descricao")
 
         Livro.objects.create(
+            user=user,
             titulo=titulo,
             autor=nome_autor,
             data_publicacao=data_publicacao,
@@ -92,15 +99,69 @@ def salvar_livro(request, id):
 @login_required(login_url="/auth/login/")
 def editar_livro(request, id):
     livros = Livro.objects.get(id=id)
-    return render(request, "editar_equipe.html", {"livros": livros})
+    return render(request, "editar_livro.html", {"livros": livros})
 
 @login_required(login_url="/auth/login/")
 def update_livro(request, id):
-    nome = request.POST.get("nome")
-    equipes = Livro.objects.get(id=id)
-    equipes.nome = nome
-    equipes.save()
-    return redirect(livro_list)
+    if request.method == "POST":
+        livro = Livro.objects.get(id=id)
+        titulo = request.POST.get("nome")
+        if titulo == "":
+            return render(request, "page_404.html")
+        nome_autor = request.POST.get("nome_autor")
+        if nome_autor == "":
+            nome_autor = livro.autor
+        data_publicacao = request.POST.get("data_publicacao")
+        if data_publicacao == "":
+            data_publicacao = livro.data_publicacao
+        editora = request.POST.get("editora")
+        if editora == "":
+            editora = livro.editora
+        num_pag = request.POST.get("num_pag")
+        if num_pag == "":
+            num_pag = livro.numero_paginas
+        genero = request.POST.get("genero")
+        if genero == "":
+            genero = livro.genero
+        idioma = request.POST.get("idioma")
+        if idioma == "":
+            idioma = livro.idioma
+        formato = request.POST.get("formato")
+        if formato == "":
+            formato = livro.formato
+        preco = request.POST.get("preco")
+        if preco == "":
+            preco = livro.preco
+        capa = request.POST.get("capa")
+        if capa == "":
+            capa = livro.capa
+        descricao = request.POST.get("descricao")
+        if descricao == "":
+            descricao = livro.descricao
+        
+        livro.titulo = titulo
+        livro.save()
+        livro.autor = nome_autor
+        livro.save()
+        livro.data_publicacao = data_publicacao
+        livro.save()
+        livro.editora = editora
+        livro.save()
+        livro.numero_paginas = num_pag
+        livro.save()
+        livro.genero = genero
+        livro.save()
+        livro.idioma = idioma
+        livro.save()
+        livro.descricao = descricao
+        livro.save()
+        livro.capa = capa
+        livro.save()
+        livro.formato = formato
+        livro.save()
+        livro.preco = preco
+        livro.save()
+        return redirect(livro_list)
 
 @login_required(login_url="/auth/login/")
 def delete_livro(request, id):
