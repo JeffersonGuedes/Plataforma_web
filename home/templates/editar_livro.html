@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+            <div class="row align-items-center my-2">
+                <div class="col">
+                    <h2 class="h3 mb-2 page-title">Atualizar responsável</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow col-md-6 mb-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 mb-0 needs-validation">
+                    <div class="form-group" >
+                        <form action="{% url 'update4' responsavel.id %}" method="POST">
+                            {% csrf_token %}
+                            <label for="{{ responsavel.id }}" class="form-label">Nome</label>
+                            <input type="text" name="nome4" id="{{ responsavel.id }}" placeholder="{{ responsavel.nome }}" class="form-control mb-4">
+                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                        </form>
+                    </div>
+                </div>  
+            </div>  
+        </div> 
+    </div>
+</div>
+{% endblock content %}
