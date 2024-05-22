@@ -48,7 +48,12 @@ def base(request):
     
 @login_required(login_url="/auth/login/")
 def livro_list(request):
-    livro = Livro.objects.all()
+    user = request.user
+    user_id = user.id
+    livro = Livro.objects.raw(
+        """SELECT l.id, l.titulo, l.descricao, l.autor, l.formato, l.preco, l.user_id FROM public.home_livro l left join public.auth_user u on l.user_id = u.id where user_id = %s;""",
+        [user_id]
+    )
     return render(
         request,
         "livro_list.html",
@@ -71,13 +76,29 @@ def salvar_livro(request):
         if data_publicacao == "":
             data_publicacao = None
         editora = request.POST.get("editora")
+        if editora == "":
+            editora = None
         num_pag = request.POST.get("num_pag")
+        if num_pag == "":
+            num_pag = None
         genero = request.POST.get("genero")
+        if genero == "":
+            genero = None
         idioma = request.POST.get("idioma")
+        if idioma == "":
+            idioma = None
         formato = request.POST.get("formato")
+        if formato == "":
+            formato = None
         preco = request.POST.get("preco")
+        if preco == "":
+            preco = None
         capa = request.POST.get("capa")
+        if capa == "":
+            capa = None
         descricao = request.POST.get("descricao")
+        if descricao == "":
+            descricao = None
 
         Livro.objects.create(
             user=user,

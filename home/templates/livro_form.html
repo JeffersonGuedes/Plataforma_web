@@ -14,7 +14,7 @@
               <div class="col-md-6 mb-0 needs-validation">
                 <div class="form-group" >
                   <label for="simpleinput">Nome do Livro</label>
-                  <input type="text" id="simpleinput" name="nome" class="form-control" />
+                  <input type="text" id="simpleinput" name="nome" class="form-control" required/>
                 </div>
                 <div class="form-group" >
                   <label for="simpleinput">Nome do Autor</label>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="example-number6">Número de Paginas</label>
-                  <input class="form-control" id="example-number7" type="number" name="num_pag" required>
+                  <input class="form-control" id="example-number7" type="number" name="num_pag" >
                 </div>
               </div>  
               <!-- segunda coluna-->
@@ -48,6 +48,7 @@
                     <label for="simple-select4">Formato</label>
                     <select class="form-control select4" name="formato" id="simple-select4">
                       <optgroup>
+                        <option value=""></option>
                         <option value="Fisico">Físico</option>
                         <option value="Digital">Digital</option>
                       </optgroup>
@@ -71,7 +72,7 @@
             <div class="col-md-12 mb-3">
               <div class="form-group mb-2 mt-1">
                 <label for="example-helping">Descrição</label>
-                <input type="text" id="example-helping" class="form-control" name="descricao" placeholder="Motivo da criação do projeto." required>
+                <input type="text" id="example-helping" class="form-control" name="descricao" placeholder="Motivo da criação do projeto.">
               </div>
             </div>
           </div>
