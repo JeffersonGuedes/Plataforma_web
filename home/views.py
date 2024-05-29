@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+def redirect_to_login(request):
+    return redirect('/auth/login/')
 
 def register(request):
     if request.method == "GET":

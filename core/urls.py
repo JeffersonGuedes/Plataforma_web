@@ -18,8 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from home.views import *
+
 
 urlpatterns = [
+    path("", redirect_to_login),
     path('admin/', admin.site.urls),
     path("auth/", include("home.urls")),
 ]
